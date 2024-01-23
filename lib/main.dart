@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:themoviedb_app/theme/app_colors.dart';
-import 'package:themoviedb_app/widgets/auth/auth_widget.dart';
-import 'package:themoviedb_app/widgets/main_screen/main_screen_widget.dart';
-import 'package:themoviedb_app/widgets/movie_details/movie_details_widget.dart';
+import 'package:themoviedb_app/ui/theme/app_colors.dart';
+import 'package:themoviedb_app/ui/widgets/auth/auth_widget.dart';
+import 'package:themoviedb_app/ui/widgets/main_screen/main_screen_widget.dart';
+import 'package:themoviedb_app/ui/widgets/movie_details/movie_details_widget.dart';
 
 void main() {
   runApp(const MyApp());

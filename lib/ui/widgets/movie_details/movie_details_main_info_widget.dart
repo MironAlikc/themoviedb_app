@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:themoviedb_app/elements/radial_percant_widget.dart';
+import 'package:themoviedb_app/ui/widgets/elements/radial_percant_widget.dart';
 import 'package:themoviedb_app/resources/app_images.dart';
 
 class MovieDetailsMainInfoWidget extends StatelessWidget {
