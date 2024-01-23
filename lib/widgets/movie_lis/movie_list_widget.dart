@@ -113,7 +113,8 @@ class _MovieListWidgetState extends State<MovieListWidget> {
 
   void _searchMovies() {
     final query = _searchController.text;
-    if (query.isNotEmpty) { // isNotEmpty не пустой
+    if (query.isNotEmpty) {
+      // isNotEmpty не пустой
       _filteredMovies = _movies.where((Movie movie) {
         return movie.title.toLowerCase().contains(query.toLowerCase());
       }).toList();
@@ -128,6 +129,14 @@ class _MovieListWidgetState extends State<MovieListWidget> {
     _filteredMovies = _movies;
     _searchController.addListener(_searchMovies);
     super.initState();
+  }
+
+  void _onMovieTap(int index) {
+    final id = _movies[index].id;
+    Navigator.of(context).pushNamed(
+      '/main_screen/movi_details',
+      arguments: id,
+    );
   }
 
   @override
@@ -200,9 +209,9 @@ class _MovieListWidgetState extends State<MovieListWidget> {
                   Material(
                     color: Colors.transparent,
                     child: InkWell(
-                        borderRadius: BorderRadius.circular(10),
-                        onTap: () {} // => model.onMovieTap(context, index),
-                        ),
+                      borderRadius: BorderRadius.circular(10),
+                      onTap: () => _onMovieTap(index),
+                    ),
                   ),
                 ],
               ),
