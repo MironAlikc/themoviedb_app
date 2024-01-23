@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:themoviedb_app/ui/theme/app_colors.dart';
+import 'package:themoviedb_app/ui/widgets/auth/auth_model.dart';
 import 'package:themoviedb_app/ui/widgets/auth/auth_widget.dart';
 import 'package:themoviedb_app/ui/widgets/main_screen/main_screen_widget.dart';
 import 'package:themoviedb_app/ui/widgets/movie_details/movie_details_widget.dart';
@@ -9,7 +10,8 @@ void main() {
 }
 
 class MyApp extends StatelessWidget {
-  const MyApp({super.key});
+  const MyApp({Key? key}) : super(key: key);
+
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -25,52 +27,21 @@ class MyApp extends StatelessWidget {
         ),
       ),
       routes: {
-        '/': (context) => const AuthWidget(),
+        '/auth': (context) => AuthProvider(
+              model: AuthModel(),
+              child: const AuthWidget(),
+            ),
         '/main_screen': (context) => const MainScreenWidget(),
-        '/main_screen/movi_details': (context) {
+        '/main_screen/movie_details': (context) {
           final arguments = ModalRoute.of(context)?.settings.arguments;
           if (arguments is int) {
             return MovieDetailsWidget(movieId: arguments);
           } else {
-            return const MovieDetailsWidget(movieId: 0);
+            return MovieDetailsWidget(movieId: 0);
           }
         },
       },
-      initialRoute: '/',
-      onGenerateRoute: (RouteSettings settings) {
-        return MaterialPageRoute<void>(
-          builder: (context) {
-            return const Scaffold(
-              body: Center(
-                child: Text('Произошла ошибка навигации'),
-              ),
-            );
-          },
-        );
-      },
-    );
-  }
-}
-
-class ExamplWidget extends StatefulWidget {
-  const ExamplWidget({super.key});
-
-  @override
-  State<ExamplWidget> createState() => _ExamplWidgetState();
-}
-
-class _ExamplWidgetState extends State<ExamplWidget> {
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: const Text(
-          'TMDB',
-          style: TextStyle(
-            color: Colors.white,
-          ),
-        ),
-      ),
+      initialRoute: '/auth',
     );
   }
 }
