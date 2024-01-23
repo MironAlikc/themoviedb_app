@@ -34,7 +34,6 @@ class _MainScreenWidgetState extends State<MainScreenWidget> {
         children: const [
           Text('Новости'),
           MovieListWidget(),
-          //Text('Фильмы'),
           Text('Сериалы'),
         ],
       ),
