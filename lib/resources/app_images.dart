@@ -10,6 +10,7 @@ abstract class AppImages {
   static const String space = 'assets/images/space.jpeg';
   static const String spaceJam = 'assets/images/space_jam.jpeg';
   static const String pawPatrol = 'assets/images/paw_patrol.jpeg';
+  static const String moviePlacholder1 = 'assets/images/movie_placholder1.jpeg';
   static const String moviePlacholder = 'assets/images/movie_placholder.jpeg';
   static const String family = 'assets/images/family.jpeg';
   static const String gabrielIglesias = 'assets/images/gabriel_Iglesias.jpeg';
@@ -19,4 +20,6 @@ abstract class AppImages {
   static const String iceAge = 'assets/images/ice_age.jpeg';
   static const String two = 'assets/images/two.jpeg';
   static const String actor = 'assets/images/actor.jpeg';
+  static const String trailerBackground =
+      'assets/images/trailer_background.jpeg';
 }

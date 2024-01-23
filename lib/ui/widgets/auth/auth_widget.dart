@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:themoviedb_app/theme/app_button_style.dart';
+import 'package:themoviedb_app/ui/theme/app_button_style.dart';
 
 class AuthWidget extends StatelessWidget {
   const AuthWidget({super.key});

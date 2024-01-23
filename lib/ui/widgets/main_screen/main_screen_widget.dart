@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:themoviedb_app/widgets/movie_lis/movie_list_widget.dart';
+import 'package:themoviedb_app/ui/widgets/movie_lis/movie_list_widget.dart';
+import 'package:themoviedb_app/ui/widgets/news/new_widget.dart';
+import 'package:themoviedb_app/ui/widgets/tv_show_list/tv_show_list_widget.dart';
 
 class MainScreenWidget extends StatefulWidget {
   const MainScreenWidget({super.key});
@@ -31,10 +33,10 @@ class _MainScreenWidgetState extends State<MainScreenWidget> {
       ),
       body: IndexedStack(
         index: _selectedTeb,
-        children: const [
-          Text('Новости'),
-          MovieListWidget(),
-          Text('Сериалы'),
+        children: [
+          const NewsWidget(),
+          const MovieListWidget(),
+          TWShowListWidget(),
         ],
       ),
       bottomNavigationBar: BottomNavigationBar(
