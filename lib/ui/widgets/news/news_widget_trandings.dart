@@ -1,4 +1,3 @@
-
 import 'package:flutter/material.dart';
 import 'package:themoviedb_app/resources/app_images.dart';
 import 'package:themoviedb_app/ui/widgets/elements/radial_percant_widget.dart';
@@ -31,8 +30,7 @@ class _NewsWidgetTrandingsState extends State<NewsWidgetTrandings> {
                 onChanged: (catrgory) {},
                 items: const [
                   DropdownMenuItem(value: 'today', child: Text('Today')),
-                  DropdownMenuItem(
-                      value: 'week', child: Text('This Week')),
+                  DropdownMenuItem(value: 'week', child: Text('This Week')),
                 ],
               ),
             ],
@@ -40,7 +38,7 @@ class _NewsWidgetTrandingsState extends State<NewsWidgetTrandings> {
         ),
         const SizedBox(height: 20),
         SizedBox(
-          height: 306,
+          height: 356,
           child: ListView.builder(
             scrollDirection: Axis.horizontal,
             itemCount: 10,
@@ -82,8 +80,7 @@ class _NewsWidgetTrandingsState extends State<NewsWidgetTrandings> {
                             child: RadialPercentWidget(
                               percent: 0.68,
                               fillColor: Color.fromARGB(255, 10, 23, 25),
-                              lineColor:
-                                  Color.fromARGB(255, 37, 203, 103),
+                              lineColor: Color.fromARGB(255, 37, 203, 103),
                               freeColor: Color.fromARGB(255, 25, 54, 31),
                               lineWidth: 3,
                               child: Text(
