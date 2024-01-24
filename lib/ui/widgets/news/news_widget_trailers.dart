@@ -18,8 +18,7 @@ class _NewsWidgetTrailersState extends State<NewsWidgetTrailers> {
           fit: BoxFit.fitHeight,
           colorFilter:
               ColorFilter.mode(Colors.blueGrey.shade700, BlendMode.modulate),
-          image:
-              const AssetImage(AppImages.trailerBackground),
+          image: const AssetImage(AppImages.trailerBackground),
         ),
       ),
       child: Column(
@@ -77,8 +76,8 @@ class _NewsWidgetTrailersState extends State<NewsWidgetTrailers> {
                                     alignment: Alignment.center,
                                     children: [
                                       Image(
-                                        image: AssetImage(AppImages
-                                            .trailerBackground),
+                                        image: AssetImage(
+                                            AppImages.trailerBackground),
                                       ),
                                       DecoratedBox(
                                         decoration: BoxDecoration(
