@@ -3,6 +3,7 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:themoviedb_app/domain/api_client/api_client.dart';
 import 'package:themoviedb_app/domain/data_providers/session_data_provider.dart';
+import 'package:themoviedb_app/ui/navigation/main_navigation.dart';
 
 // Хронить состояние
 class AuthModel extends ChangeNotifier {
@@ -52,7 +53,11 @@ class AuthModel extends ChangeNotifier {
       return;
     }
     await _sessionDataProvider.setSessionId(sessionId);
-    unawaited(Navigator.of(context).pushNamed('/main_screen'));
+    unawaited(
+      Navigator.of(context).pushReplacementNamed(
+        MainNavigationRouteNames.mainScreen,
+      ),
+    );
   }
 }
 

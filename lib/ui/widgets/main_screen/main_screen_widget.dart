@@ -1,22 +1,23 @@
 import 'package:flutter/material.dart';
+import 'package:themoviedb_app/domain/data_providers/session_data_provider.dart';
 import 'package:themoviedb_app/ui/widgets/movie_lis/movie_list_widget.dart';
 import 'package:themoviedb_app/ui/widgets/news/new_widget.dart';
 import 'package:themoviedb_app/ui/widgets/tv_show_list/tv_show_list_widget.dart';
 
 class MainScreenWidget extends StatefulWidget {
-  const MainScreenWidget({super.key});
+  const MainScreenWidget({Key? key}) : super(key: key);
 
   @override
-  State<MainScreenWidget> createState() => _MainScreenWidgetState();
+  _MainScreenWidgetState createState() => _MainScreenWidgetState();
 }
 
 class _MainScreenWidgetState extends State<MainScreenWidget> {
-  int _selectedTeb = 1;
+  int _selectedTab = 0;
 
   void onSelectTab(int index) {
-    if (_selectedTeb == index) return;
+    if (_selectedTab == index) return;
     setState(() {
-      _selectedTeb = index;
+      _selectedTab = index;
     });
   }
 
@@ -30,9 +31,18 @@ class _MainScreenWidgetState extends State<MainScreenWidget> {
             color: Colors.white,
           ),
         ),
+        actions: [
+          IconButton(
+            onPressed: () => SessionDataProvider().setSessionId(null),
+            icon: const Icon(
+              Icons.search,
+              color: Colors.white,
+            ),
+          )
+        ],
       ),
       body: IndexedStack(
-        index: _selectedTeb,
+        index: _selectedTab,
         children: [
           const NewsWidget(),
           const MovieListWidget(),
@@ -40,7 +50,7 @@ class _MainScreenWidgetState extends State<MainScreenWidget> {
         ],
       ),
       bottomNavigationBar: BottomNavigationBar(
-        currentIndex: _selectedTeb,
+        currentIndex: _selectedTab,
         items: const [
           BottomNavigationBarItem(
             icon: Icon(Icons.home),
