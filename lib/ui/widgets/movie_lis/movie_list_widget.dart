@@ -1,156 +1,26 @@
 import 'package:flutter/material.dart';
-import 'package:themoviedb_app/resources/app_images.dart';
-import 'package:themoviedb_app/ui/navigation/main_navigation.dart';
+import 'package:themoviedb_app/domain/api_client/api_client.dart';
+import 'package:themoviedb_app/domain/library/Inherited/provider.dart';
+import 'package:themoviedb_app/ui/widgets/movie_lis/movie_list_model.dart';
 
-class Movie {
-  final int id;
-  final String imageName;
-  final String title;
-  final String time;
-  final String description;
 
-  Movie({
-    required this.id,
-    required this.imageName,
-    required this.title,
-    required this.time,
-    required this.description,
-  });
-}
-
-class MovieListWidget extends StatefulWidget {
+class MovieListWidget extends StatelessWidget {
   const MovieListWidget({super.key});
 
   @override
-  State<MovieListWidget> createState() => _MovieListWidgetState();
-}
-
-class _MovieListWidgetState extends State<MovieListWidget> {
-  final _movies = [
-    Movie(
-      id: 1,
-      imageName: AppImages.age, //buck
-      title: 'Падение Луны',
-      time: 'Февраль 07, 2021',
-      description:
-          'В 2011 году во время рядового ремонта спутника на находившихся',
-    ),
-    Movie(
-      id: 2,
-      imageName: AppImages.halo,
-      title: 'Падение Луны',
-      time: 'Февраль 04, 2022',
-      description:
-          'В 2011 году во время рядового ремонта спутника на находившихся',
-    ),
-    Movie(
-      id: 3,
-      imageName: AppImages.moonfall,
-      title: 'Падение Луны',
-      time: 'Февраль 04, 2022',
-      description:
-          'В 2011 году во время рядового ремонта спутника на находившихся',
-    ),
-    Movie(
-      id: 4,
-      imageName: AppImages.luca,
-      title: 'Падение Луны',
-      time: 'Февраль 04, 2022',
-      description:
-          'В 2011 году во время рядового ремонта спутника на находившихся',
-    ),
-    Movie(
-      id: 5,
-      imageName: AppImages.theBossBaby2,
-      title: 'Падение Луны',
-      time: 'Февраль 04, 2022',
-      description:
-          'В 2011 году во время рядового ремонта спутника на находившихся',
-    ),
-    Movie(
-      id: 6,
-      imageName: AppImages.spaceJam,
-      title: 'Падение Луны',
-      time: 'Февраль 04, 2022',
-      description:
-          'В 2011 году во время рядового ремонта спутника на находившихся',
-    ),
-    Movie(
-      id: 7,
-      imageName: AppImages.pawPatrol,
-      title: 'Падение Луны',
-      time: 'Февраль 04, 2022',
-      description:
-          'В 2011 году во время рядового ремонта спутника на находившихся',
-    ),
-    Movie(
-      id: 8,
-      imageName: AppImages.paraEls,
-      title: 'Падение Луны',
-      time: 'Февраль 04, 2022',
-      description:
-          'В 2011 году во время рядового ремонта спутника на находившихся',
-    ),
-    Movie(
-      id: 9,
-      imageName: AppImages.moonfall,
-      title: 'Падение Луны',
-      time: 'Февраль 04, 2022',
-      description:
-          'В 2011 году во время рядового ремонта спутника на находившихся',
-    ),
-    Movie(
-      id: 10,
-      imageName: AppImages.buck,
-      title: 'Падение Луны',
-      time: 'Февраль 04, 2022',
-      description:
-          'В 2011 году во время рядового ремонта спутника на находившихся',
-    ),
-  ];
-  var _filteredMovies = <Movie>[];
-
-  final _searchController = TextEditingController();
-
-  void _searchMovies() {
-    final query = _searchController.text;
-    if (query.isNotEmpty) {
-      // isNotEmpty не пустой
-      _filteredMovies = _movies.where((Movie movie) {
-        return movie.title.toLowerCase().contains(query.toLowerCase());
-      }).toList();
-    } else {
-      _filteredMovies = _movies;
-    }
-    setState(() {});
-  }
-
-  @override
-  void initState() {
-    _filteredMovies = _movies;
-    _searchController.addListener(_searchMovies);
-    super.initState();
-  }
-
- void _onMovieTap(int index) {
-    final id = _movies[index].id;
-    Navigator.of(context).pushNamed(
-      MainNavigationRouteNames.movieDetails,
-      arguments: id,
-    );
-  }
-
-  @override
   Widget build(BuildContext context) {
+    final model = NotifierProvider.watch<MovieListModel>(context);
+    if (model == null) return const SizedBox.shrink();
     return Stack(
       children: [
         ListView.builder(
           padding: const EdgeInsets.only(top: 70),
           keyboardDismissBehavior: ScrollViewKeyboardDismissBehavior.onDrag,
-          itemCount: _filteredMovies.length,
+          itemCount: model.movies.length,
           itemExtent: 163,
           itemBuilder: (BuildContext context, int index) {
-            final movie = _filteredMovies[index];
+            final movie = model.movies[index];
+            final posterPath = movie.posterPath;
             return Padding(
               padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 10),
               child: Stack(
@@ -171,10 +41,11 @@ class _MovieListWidgetState extends State<MovieListWidget> {
                     clipBehavior: Clip.hardEdge,
                     child: Row(
                       children: [
-                        Image(
-                          image: AssetImage(movie.imageName),
-                        ),
-                        const SizedBox(width: 10),
+                        posterPath != null
+                            ? Image.network(ApiClient.imageUrl(posterPath),
+                                width: 95)
+                            : const SizedBox.shrink(),
+                        const SizedBox(width: 15),
                         Expanded(
                           child: Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
@@ -189,14 +60,14 @@ class _MovieListWidgetState extends State<MovieListWidget> {
                               ),
                               const SizedBox(height: 5),
                               Text(
-                                movie.time,
+                                model.stringFromDate(movie.releaseDate),
                                 style: const TextStyle(color: Colors.grey),
                                 maxLines: 1,
                                 overflow: TextOverflow.ellipsis,
                               ),
                               const SizedBox(height: 20),
                               Text(
-                                movie.description,
+                                movie.overview,
                                 maxLines: 2,
                                 overflow: TextOverflow.ellipsis,
                               ),
@@ -211,7 +82,7 @@ class _MovieListWidgetState extends State<MovieListWidget> {
                     color: Colors.transparent,
                     child: InkWell(
                       borderRadius: BorderRadius.circular(10),
-                      onTap: () => _onMovieTap(index),
+                      onTap: () => model.onMovieTap(context, index),
                     ),
                   ),
                 ],
@@ -222,21 +93,14 @@ class _MovieListWidgetState extends State<MovieListWidget> {
         Padding(
           padding: const EdgeInsets.all(10.0),
           child: TextField(
-            controller: _searchController,
             decoration: InputDecoration(
-              border: const OutlineInputBorder(
-                borderRadius: BorderRadius.all(Radius.circular(10)),
-              ),
-              focusedBorder: const OutlineInputBorder(
-                borderRadius: BorderRadius.all(Radius.circular(10)),
-                borderSide: BorderSide(color: Colors.blue),
-              ),
               labelText: 'Поиск',
               filled: true,
-              fillColor: Colors.white.withAlpha(235), // прозрачность
+              fillColor: Colors.white.withAlpha(235),
+              border: const OutlineInputBorder(),
             ),
           ),
-        )
+        ),
       ],
     );
   }
