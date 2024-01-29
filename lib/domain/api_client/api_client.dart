@@ -25,10 +25,10 @@ class ApiClientException implements Exception {
 class ApiClient {
   final _client = HttpClient();
   static const _host = 'https://api.themoviedb.org/3';
- static const _imageUrl = 'https://image.tmdb.org/t/p/w500';
+  static const _imageUrl = 'https://image.tmdb.org/t/p/w500';
   static const _apiKey = '67ebcd297e43e6ea6d0c47bcca1abe1e';
 
-   static String imageUrl(String path) => _imageUrl + path;
+  static String imageUrl(String path) => _imageUrl + path;
 
   Future<String> auth({
     required String username,
@@ -115,7 +115,8 @@ class ApiClient {
     );
     return result;
   }
-    Future<PopularMovieResponse> popularMovie(int page, String locale) async {
+
+  Future<PopularMovieResponse> popularMovie(int page, String locale) async {
     parser(dynamic json) {
       final jsonMap = json as Map<String, dynamic>;
       final response = PopularMovieResponse.fromJson(jsonMap);
@@ -133,16 +134,40 @@ class ApiClient {
     return result;
   }
 
+  Future<PopularMovieResponse> searchMovie(
+    int page,
+    String locale,
+    String query,
+  ) async {
+    parser(dynamic json) {
+      final jsonMap = json as Map<String, dynamic>;
+      final response = PopularMovieResponse.fromJson(jsonMap);
+      return response;
+    }
+    final result = _get(
+      '/search/movie',
+      parser,
+      <String, dynamic>{
+        'api_key': _apiKey,
+        'page': page.toString(),
+        'language': locale,
+        'query': query,
+        'include_adult': true.toString(),
+      },
+    );
+    return result;
+  }
+
   Future<String> _validateUser({
     required String username,
     required String password,
     required String requestToken,
   }) async {
-    parser(dynamic json) {
+    final parser = (dynamic json) {
       final jsonMap = json as Map<String, dynamic>;
       final token = jsonMap['request_token'] as String;
       return token;
-    }
+    };
     final parameters = <String, dynamic>{
       'username': username,
       'password': password,
@@ -160,11 +185,11 @@ class ApiClient {
   Future<String> _makeSession({
     required String requestToken,
   }) async {
-    parser(dynamic json) {
+    final parser = (dynamic json) {
       final jsonMap = json as Map<String, dynamic>;
       final sessionId = jsonMap['session_id'] as String;
       return sessionId;
-    }
+    };
     final parameters = <String, dynamic>{
       'request_token': requestToken,
     };
