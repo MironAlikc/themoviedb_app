@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:themoviedb_app/resources/app_images.dart';
 
 class MovieDetailsMainScreenCastWidget extends StatelessWidget {
-  const MovieDetailsMainScreenCastWidget({Key? key}) : super(key: key);
+  const MovieDetailsMainScreenCastWidget({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -27,7 +27,7 @@ class MovieDetailsMainScreenCastWidget extends StatelessWidget {
               child: ListView.builder(
                 itemCount: 20,
                 itemExtent: 120,
-                scrollDirection: Axis.horizontal, // скролится по горизонтали
+                scrollDirection: Axis.horizontal,
                 itemBuilder: (BuildContext context, int index) {
                   return Padding(
                     padding: const EdgeInsets.all(8.0),
@@ -47,7 +47,6 @@ class MovieDetailsMainScreenCastWidget extends StatelessWidget {
                         ],
                       ),
                       child: const ClipRRect(
-                        // обрезает фото
                         borderRadius: BorderRadius.all(Radius.circular(8)),
                         clipBehavior: Clip.hardEdge,
                         child: Column(
@@ -58,11 +57,20 @@ class MovieDetailsMainScreenCastWidget extends StatelessWidget {
                               child: Column(
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
-                                  Text('Steve Yeun', maxLines: 1),
+                                  Text(
+                                    'Steven Yeun',
+                                    maxLines: 1,
+                                  ),
                                   SizedBox(height: 7),
-                                  Text('Mark Grayson', maxLines: 4),
+                                  Text(
+                                    'Mark Grayson / Invincible (voice)',
+                                    maxLines: 4,
+                                  ),
                                   SizedBox(height: 7),
-                                  Text('8 Episodes', maxLines: 1),
+                                  Text(
+                                    '8 Episodes',
+                                    maxLines: 1,
+                                  ),
                                 ],
                               ),
                             )

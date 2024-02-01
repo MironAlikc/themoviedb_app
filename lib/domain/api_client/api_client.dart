@@ -1,6 +1,7 @@
 import 'dart:convert';
 import 'dart:io';
 
+import 'package:themoviedb_app/domain/entity/movie_details.dart';
 import 'package:themoviedb_app/domain/entity/popular_movie_response.dart';
 
 /*
@@ -158,16 +159,36 @@ class ApiClient {
     return result;
   }
 
+  Future<MovieDetails> movieDetails(
+    int movieId,
+    String locale,
+  ) async {
+    parser(dynamic json) {
+      final jsonMap = json as Map<String, dynamic>;
+      final response = MovieDetails.fromJson(jsonMap);
+      return response;
+    }
+    final result = _get(
+      '/movie/$movieId',
+      parser,
+      <String, dynamic>{
+        'api_key': _apiKey,
+        'language': locale,
+      },
+    );
+    return result;
+  }
+
   Future<String> _validateUser({
     required String username,
     required String password,
     required String requestToken,
   }) async {
-    final parser = (dynamic json) {
+    parser(dynamic json) {
       final jsonMap = json as Map<String, dynamic>;
       final token = jsonMap['request_token'] as String;
       return token;
-    };
+    }
     final parameters = <String, dynamic>{
       'username': username,
       'password': password,
@@ -185,11 +206,11 @@ class ApiClient {
   Future<String> _makeSession({
     required String requestToken,
   }) async {
-    final parser = (dynamic json) {
+    parser(dynamic json) {
       final jsonMap = json as Map<String, dynamic>;
       final sessionId = jsonMap['session_id'] as String;
       return sessionId;
-    };
+    }
     final parameters = <String, dynamic>{
       'request_token': requestToken,
     };
