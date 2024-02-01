@@ -28,6 +28,7 @@ class _MainScreenWidgetState extends State<MainScreenWidget> {
   @override
   void didChangeDependencies() {
     super.didChangeDependencies();
+
     movieListModel.setupLocale(context);
   }
 
@@ -36,7 +37,12 @@ class _MainScreenWidgetState extends State<MainScreenWidget> {
     final model = NotifierProvider.read<MainScreenModel>(context);
     return Scaffold(
       appBar: AppBar(
-        title: const Text('TMDB'),
+        title: const Text(
+          'TMDB',
+          style: const TextStyle(
+            color: Colors.white,
+          ),
+        ),
         actions: [
           IconButton(
             onPressed: () => SessionDataProvider().setSessionId(null),
@@ -49,7 +55,8 @@ class _MainScreenWidgetState extends State<MainScreenWidget> {
         children: [
           const NewsWidget(),
           NotifierProvider(
-            model: movieListModel,
+            create: () => movieListModel,
+            isManagingModel: false,
             child: const MovieListWidget(),
           ),
           TWShowListWidget(),

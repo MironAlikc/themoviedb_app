@@ -3,7 +3,7 @@ import 'package:themoviedb_app/ui/widgets/elements/radial_percant_widget.dart';
 import 'package:themoviedb_app/resources/app_images.dart';
 
 class MovieDetailsMainInfoWidget extends StatelessWidget {
-  const MovieDetailsMainInfoWidget({Key? key}) : super(key: key);
+  const MovieDetailsMainInfoWidget({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -16,24 +16,24 @@ class MovieDetailsMainInfoWidget extends StatelessWidget {
           child: _MovieNameWidget(),
         ),
         const _ScoreWidget(),
-        const _SummaryWidget(),
+        const _SummeryWidget(),
         Padding(
           padding: const EdgeInsets.all(10.0),
           child: _OverviewWidget(),
         ),
         const Padding(
           padding: EdgeInsets.all(10.0),
-          child: DescriptionWidget(),
+          child: _DescriptionWidget(),
         ),
         const SizedBox(height: 30),
-        const _PeopleWidget(),
+        const _PeopleWidgets(),
       ],
     );
   }
 
   Text _OverviewWidget() {
     return const Text(
-      'Обзор',
+      'Overview',
       style: TextStyle(
         color: Colors.white,
         fontSize: 16,
@@ -43,26 +43,26 @@ class MovieDetailsMainInfoWidget extends StatelessWidget {
   }
 }
 
-// class _OverviewWidget extends StatelessWidget {
-//   const _OverviewWidget({
-//     Key? key,
-//   }) : super(key: key);
+class _DescriptionWidget extends StatelessWidget {
+  const _DescriptionWidget({
+    super.key,
+  });
 
-//   @override
-//   Widget build(BuildContext context) {
-//     return const Text(
-//       'Обзор',
-//       style: TextStyle(
-//         color: Colors.white,
-//         fontSize: 16,
-//         fontWeight: FontWeight.w400,
-//       ),
-//     );
-//   }
-// }
+  @override
+  Widget build(BuildContext context) {
+    return const Text(
+      'An elite Navy SEAL uncovers an international conspiracy while seeking justice for the murder of his pregnant wife.',
+      style: TextStyle(
+        color: Colors.white,
+        fontSize: 16,
+        fontWeight: FontWeight.w400,
+      ),
+    );
+  }
+}
 
 class _TopPosterWidget extends StatelessWidget {
-  const _TopPosterWidget({Key? key}) : super(key: key);
+  const _TopPosterWidget({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -73,7 +73,7 @@ class _TopPosterWidget extends StatelessWidget {
           top: 20,
           left: 20,
           bottom: 20,
-          child: Image(image: AssetImage(AppImages.age)),
+          child: Image(image: AssetImage(AppImages.iceAge)),
         ),
       ],
     );
@@ -81,24 +81,24 @@ class _TopPosterWidget extends StatelessWidget {
 }
 
 class _MovieNameWidget extends StatelessWidget {
-  const _MovieNameWidget({Key? key}) : super(key: key);
+  const _MovieNameWidget({super.key});
 
   @override
   Widget build(BuildContext context) {
     return RichText(
-      textAlign: TextAlign.center,
       maxLines: 3,
+      textAlign: TextAlign.center,
       text: const TextSpan(
         children: [
           TextSpan(
-            text: 'Приключения Бака Уайлда в ледниковый период.',
+            text: 'Tom Clancy`s Without Remorse',
             style: TextStyle(
-              fontSize: 20.85, //17
+              fontSize: 17,
               fontWeight: FontWeight.w600,
             ),
           ),
           TextSpan(
-            text: '(2022)',
+            text: ' (2021)',
             style: TextStyle(
               fontSize: 16,
               fontWeight: FontWeight.w400,
@@ -135,7 +135,7 @@ class _ScoreWidget extends StatelessWidget {
                 ),
               ),
               SizedBox(width: 10),
-              Text('Оценка пользователя'),
+              Text('User Score'),
             ],
           ),
         ),
@@ -145,8 +145,7 @@ class _ScoreWidget extends StatelessWidget {
           child: const Row(
             children: [
               Icon(Icons.play_arrow),
-              SizedBox(width: 10),
-              Text('Воспроизвести '),
+              Text('Play Trailer'),
             ],
           ),
         ),
@@ -155,17 +154,17 @@ class _ScoreWidget extends StatelessWidget {
   }
 }
 
-class _SummaryWidget extends StatelessWidget {
-  const _SummaryWidget({Key? key}) : super(key: key);
+class _SummeryWidget extends StatelessWidget {
+  const _SummeryWidget({super.key});
 
   @override
   Widget build(BuildContext context) {
     return const ColoredBox(
-      color: Color.fromRGBO(22, 12, 25, 1.0),
+      color: Color.fromRGBO(22, 21, 25, 1.0),
       child: Padding(
-        padding: EdgeInsets.all(8.0),
+        padding: EdgeInsets.symmetric(vertical: 10, horizontal: 70),
         child: Text(
-          'PG, 28.01.2022 (США) мультфильм, комедия, приключения, семейный 1ч 22м',
+          'R, 04/29/2021 (US) 1h49m Action, Adventure, Thriller, War',
           maxLines: 3,
           textAlign: TextAlign.center,
           style: TextStyle(
@@ -179,26 +178,8 @@ class _SummaryWidget extends StatelessWidget {
   }
 }
 
-class DescriptionWidget extends StatelessWidget {
-  const DescriptionWidget({
-    Key? key,
-  }) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    return const Text(
-      'Бесстрашный одноглазый ласка Бак объединяется с озорными братьями-опоссумами Крэшем и Эдди, чтобы отправиться в новое приключение в доме Бака: Мир динозавров.',
-      style: TextStyle(
-        color: Colors.white,
-        fontSize: 16,
-        fontWeight: FontWeight.w400,
-      ),
-    );
-  }
-}
-
-class _PeopleWidget extends StatelessWidget {
-  const _PeopleWidget({Key? key}) : super(key: key);
+class _PeopleWidgets extends StatelessWidget {
+  const _PeopleWidgets({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -212,7 +193,6 @@ class _PeopleWidget extends StatelessWidget {
       fontSize: 16,
       fontWeight: FontWeight.w400,
     );
-
     return const Column(
       children: [
         Row(
@@ -222,17 +202,17 @@ class _PeopleWidget extends StatelessWidget {
             Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Text('Сценарий, Сюжет', style: nameStyle),
-                Text('Директор', style: jobTilteStyle),
+                Text('Stefano Sollima', style: nameStyle),
+                Text('Director', style: jobTilteStyle),
               ],
             ),
             Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Text('Сценарий, Сюжет', style: nameStyle),
-                Text('Директор', style: jobTilteStyle),
+                Text('Stefano Sollima', style: nameStyle),
+                Text('Director', style: jobTilteStyle),
               ],
-            ),
+            )
           ],
         ),
         SizedBox(height: 20),
@@ -243,17 +223,17 @@ class _PeopleWidget extends StatelessWidget {
             Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Text('Сценарий, Сюжет', style: nameStyle),
-                Text('Директор', style: jobTilteStyle),
+                Text('Stefano Sollima', style: nameStyle),
+                Text('Director', style: jobTilteStyle),
               ],
             ),
             Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Text('Сценарий, Сюжет', style: nameStyle),
-                Text('Директор', style: jobTilteStyle),
+                Text('Stefano Sollima', style: nameStyle),
+                Text('Director', style: jobTilteStyle),
               ],
-            ),
+            )
           ],
         ),
       ],
