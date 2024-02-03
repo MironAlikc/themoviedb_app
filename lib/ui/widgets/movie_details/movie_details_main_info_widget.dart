@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:themoviedb_app/domain/api_client/api_client.dart';
+import 'package:themoviedb_app/domain/library/Inherited/provider.dart';
 import 'package:themoviedb_app/ui/widgets/elements/radial_percant_widget.dart';
 import 'package:themoviedb_app/resources/app_images.dart';
+import 'package:themoviedb_app/ui/widgets/movie_details/movie_details_model.dart';
 
 class MovieDetailsMainInfoWidget extends StatelessWidget {
   const MovieDetailsMainInfoWidget({super.key});
@@ -66,16 +69,26 @@ class _TopPosterWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const Stack(
-      children: [
-        Image(image: AssetImage(AppImages.two)),
-        Positioned(
-          top: 20,
-          left: 20,
-          bottom: 20,
-          child: Image(image: AssetImage(AppImages.iceAge)),
-        ),
-      ],
+    final model = NotifierProvider.watch<MovieDetailsModel>(context);
+    final backdropPath = model?.movieDetails?.backdropPath;
+    final posterPath = model?.movieDetails?.posterPath;
+    return AspectRatio(
+      aspectRatio: 390 / 219,
+      child: Stack(
+        children: [
+          backdropPath != null
+              ? Image.network(ApiClient.imageUrl(backdropPath))
+              : const SizedBox.shrink(),
+          Positioned(
+            top: 20,
+            left: 20,
+            bottom: 20,
+            child: posterPath != null
+                ? Image.network(ApiClient.imageUrl(posterPath))
+                : const SizedBox.shrink(),
+          ),
+        ],
+      ),
     );
   }
 }
