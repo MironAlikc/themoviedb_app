@@ -109,6 +109,7 @@ class ApiClient {
       final token = jsonMap['request_token'] as String;
       return token;
     }
+
     final result = _get(
       '/authentication/token/new',
       parser,
@@ -123,6 +124,7 @@ class ApiClient {
       final response = PopularMovieResponse.fromJson(jsonMap);
       return response;
     }
+
     final result = _get(
       '/movie/popular',
       parser,
@@ -145,6 +147,7 @@ class ApiClient {
       final response = PopularMovieResponse.fromJson(jsonMap);
       return response;
     }
+
     final result = _get(
       '/search/movie',
       parser,
@@ -168,6 +171,7 @@ class ApiClient {
       final response = MovieDetails.fromJson(jsonMap);
       return response;
     }
+
     final result = _get(
       '/movie/$movieId',
       parser,
@@ -189,6 +193,7 @@ class ApiClient {
       final token = jsonMap['request_token'] as String;
       return token;
     }
+
     final parameters = <String, dynamic>{
       'username': username,
       'password': password,
@@ -211,6 +216,7 @@ class ApiClient {
       final sessionId = jsonMap['session_id'] as String;
       return sessionId;
     }
+
     final parameters = <String, dynamic>{
       'request_token': requestToken,
     };
