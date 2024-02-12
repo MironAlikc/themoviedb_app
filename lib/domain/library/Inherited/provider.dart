@@ -13,6 +13,7 @@ class NotifierProvider<Model extends ChangeNotifier> extends StatefulWidget {
   });
 
   @override
+  // ignore: library_private_types_in_public_api
   _NotifierProviderState<Model> createState() =>
       _NotifierProviderState<Model>();
 
@@ -63,13 +64,11 @@ class _InheritedNotifierProvider<Model extends ChangeNotifier>
   final Model model;
 
   const _InheritedNotifierProvider({
-    Key? key,
+    super.key,
     required this.model,
-    required Widget child,
+    required super.child,
   }) : super(
-          key: key,
           notifier: model,
-          child: child,
         );
 }
 
@@ -77,13 +76,10 @@ class Provider<Model> extends InheritedWidget {
   final Model model;
 
   const Provider({
-    Key? key,
+    super.key,
     required this.model,
-    required Widget child,
-  }) : super(
-          key: key,
-          child: child,
-        );
+    required super.child,
+  });
 
   static Model? watch<Model>(BuildContext context) {
     return context.dependOnInheritedWidgetOfExactType<Provider<Model>>()?.model;

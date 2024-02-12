@@ -29,5 +29,5 @@ class MovieDetailsModel extends ChangeNotifier {
   Future<void> loadDetails() async {
     _movieDetails = await _apiClient.movieDetails(movieId, _locale);
     notifyListeners();
-  }
+  } 
 }
