@@ -46,15 +46,14 @@ class MovieDetailsMainInfoWidget extends StatelessWidget {
 }
 
 class _DescriptionWidget extends StatelessWidget {
-  const _DescriptionWidget({
-    super.key,
-  });
+  const _DescriptionWidget();
 
   @override
   Widget build(BuildContext context) {
-    return const Text(
-      'An elite Navy SEAL uncovers an international conspiracy while seeking justice for the murder of his pregnant wife.',
-      style: TextStyle(
+    final model = NotifierProvider.watch<MovieDetailsModel>(context);
+    return Text(
+      model?.movieDetails?.overview ?? '',
+      style: const TextStyle(
         color: Colors.white,
         fontSize: 16,
         fontWeight: FontWeight.w400,
@@ -225,7 +224,7 @@ class _SummeryWidget extends StatelessWidget {
 }
 
 class _PeopleWidgets extends StatelessWidget {
-  const _PeopleWidgets({super.key});
+  const _PeopleWidgets();
 
   @override
   Widget build(BuildContext context) {

@@ -8,10 +8,12 @@ class MovieDetailsWidget extends StatefulWidget {
   const MovieDetailsWidget({super.key});
 
   @override
+  // ignore: library_private_types_in_public_api
   _MovieDetailsWidgetState createState() => _MovieDetailsWidgetState();
 }
 
 class _MovieDetailsWidgetState extends State<MovieDetailsWidget> {
+  
   @override
   void didChangeDependencies() {
     super.didChangeDependencies();
@@ -41,7 +43,7 @@ class _TitleWidget extends StatelessWidget {
     final model = NotifierProvider.watch<MovieDetailsModel>(context);
     return Text(
       model?.movieDetails?.title ?? 'Загрузка...',
-      style: const TextStyle(
+      style: const TextStyle( 
         color: Colors.white,
       ),
     );

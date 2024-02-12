@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:themoviedb_app/domain/data_providers/session_data_provider.dart';
 import 'package:themoviedb_app/domain/library/Inherited/provider.dart';
-import 'package:themoviedb_app/ui/widgets/main_screen/main_screen_model.dart';
 import 'package:themoviedb_app/ui/widgets/movie_lis/movie_list_model.dart';
 import 'package:themoviedb_app/ui/widgets/movie_lis/movie_list_widget.dart';
 import 'package:themoviedb_app/ui/widgets/news/new_widget.dart';
@@ -34,12 +33,12 @@ class _MainScreenWidgetState extends State<MainScreenWidget> {
 
   @override
   Widget build(BuildContext context) {
-    final model = NotifierProvider.read<MainScreenModel>(context);
+    // final model = NotifierProvider.read<MainScreenModel>(context);
     return Scaffold(
       appBar: AppBar(
         title: const Text(
           'TMDB',
-          style: const TextStyle(
+          style: TextStyle(
             color: Colors.white,
           ),
         ),
