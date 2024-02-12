@@ -6,11 +6,11 @@ class NotifierProvider<Model extends ChangeNotifier> extends StatefulWidget {
   final Model Function() create;
 
   const NotifierProvider({
-    Key? key,
+    super.key,
     required this.child,
     this.isManagingModel = true,
     required this.create,
-  }) : super(key: key);
+  });
 
   @override
   _NotifierProviderState<Model> createState() =>
@@ -77,10 +77,13 @@ class Provider<Model> extends InheritedWidget {
   final Model model;
 
   const Provider({
-    super.key,
+    Key? key,
     required this.model,
-    required super.child,
-  });
+    required Widget child,
+  }) : super(
+          key: key,
+          child: child,
+        );
 
   static Model? watch<Model>(BuildContext context) {
     return context.dependOnInheritedWidgetOfExactType<Provider<Model>>()?.model;
