@@ -104,12 +104,11 @@ class ApiClient {
   }
 
   Future<String> _makeToken() async {
-    parser(dynamic json) {
+    final parser = (dynamic json) {
       final jsonMap = json as Map<String, dynamic>;
       final token = jsonMap['request_token'] as String;
       return token;
-    }
-
+    };
     final result = _get(
       '/authentication/token/new',
       parser,
@@ -119,12 +118,11 @@ class ApiClient {
   }
 
   Future<PopularMovieResponse> popularMovie(int page, String locale) async {
-    parser(dynamic json) {
+    final parser = (dynamic json) {
       final jsonMap = json as Map<String, dynamic>;
       final response = PopularMovieResponse.fromJson(jsonMap);
       return response;
-    }
-
+    };
     final result = _get(
       '/movie/popular',
       parser,
@@ -142,12 +140,11 @@ class ApiClient {
     String locale,
     String query,
   ) async {
-    parser(dynamic json) {
+    final parser = (dynamic json) {
       final jsonMap = json as Map<String, dynamic>;
       final response = PopularMovieResponse.fromJson(jsonMap);
       return response;
-    }
-
+    };
     final result = _get(
       '/search/movie',
       parser,
@@ -166,16 +163,16 @@ class ApiClient {
     int movieId,
     String locale,
   ) async {
-    parser(dynamic json) {
+    final parser = (dynamic json) {
       final jsonMap = json as Map<String, dynamic>;
       final response = MovieDetails.fromJson(jsonMap);
       return response;
-    }
-
+    };
     final result = _get(
       '/movie/$movieId',
       parser,
       <String, dynamic>{
+        'append_to_response': 'credits,videos',
         'api_key': _apiKey,
         'language': locale,
       },
@@ -188,12 +185,11 @@ class ApiClient {
     required String password,
     required String requestToken,
   }) async {
-    parser(dynamic json) {
+    final parser = (dynamic json) {
       final jsonMap = json as Map<String, dynamic>;
       final token = jsonMap['request_token'] as String;
       return token;
-    }
-
+    };
     final parameters = <String, dynamic>{
       'username': username,
       'password': password,
@@ -211,12 +207,11 @@ class ApiClient {
   Future<String> _makeSession({
     required String requestToken,
   }) async {
-    parser(dynamic json) {
+    final parser = (dynamic json) {
       final jsonMap = json as Map<String, dynamic>;
       final sessionId = jsonMap['session_id'] as String;
       return sessionId;
-    }
-
+    };
     final parameters = <String, dynamic>{
       'request_token': requestToken,
     };
