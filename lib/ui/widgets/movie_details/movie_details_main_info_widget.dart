@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:themoviedb_app/domain/api_client/api_client.dart';
+import 'package:themoviedb_app/domain/entity/movie_details_credits.dart';
 import 'package:themoviedb_app/domain/library/Inherited/provider.dart';
+import 'package:themoviedb_app/ui/navigation/main_navigation.dart';
 import 'package:themoviedb_app/ui/widgets/elements/radial_percant_widget.dart';
 import 'package:themoviedb_app/ui/widgets/movie_details/movie_details_model.dart';
 
@@ -28,7 +30,10 @@ class MovieDetailsMainInfoWidget extends StatelessWidget {
           child: _DescriptionWidget(),
         ),
         const SizedBox(height: 30),
-        const _PeopleWidgets(),
+        const Padding(
+          padding: EdgeInsets.symmetric(horizontal: 10),
+          child: _PeopleWidgets(),
+        ),
       ],
     );
   }
@@ -46,7 +51,9 @@ class MovieDetailsMainInfoWidget extends StatelessWidget {
 }
 
 class _DescriptionWidget extends StatelessWidget {
-  const _DescriptionWidget();
+  const _DescriptionWidget({
+    Key? key,
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -63,7 +70,7 @@ class _DescriptionWidget extends StatelessWidget {
 }
 
 class _TopPosterWidget extends StatelessWidget {
-  const _TopPosterWidget();
+  const _TopPosterWidget({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -92,7 +99,7 @@ class _TopPosterWidget extends StatelessWidget {
 }
 
 class _MovieNameWidget extends StatelessWidget {
-  const _MovieNameWidget();
+  const _MovieNameWidget({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -127,13 +134,16 @@ class _MovieNameWidget extends StatelessWidget {
 }
 
 class _ScoreWidget extends StatelessWidget {
-  const _ScoreWidget();
+  const _ScoreWidget({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     final movieDetails =
         NotifierProvider.watch<MovieDetailsModel>(context)?.movieDetails;
     var voteAverage = movieDetails?.voteAverage ?? 0;
+    final videos = movieDetails?.videos.results
+        .where((video) => video.type == 'Trailer' && video.site == 'YouTube');
+    final trailerKey = videos?.isNotEmpty == true ? videos?.first.key : null;
     voteAverage = voteAverage * 10;
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
@@ -160,22 +170,27 @@ class _ScoreWidget extends StatelessWidget {
           ),
         ),
         Container(width: 1, height: 15, color: Colors.grey),
-        TextButton(
-          onPressed: () {},
-          child: const Row(
-            children: [
-              Icon(Icons.play_arrow),
-              Text('Play Trailer'),
-            ],
-          ),
-        ),
+        trailerKey != null
+            ? TextButton(
+                onPressed: () => Navigator.of(context).pushNamed(
+                  MainNavigationRouteNames.movieTrailerWidget,
+                  arguments: trailerKey,
+                ),
+                child: const Row(
+                  children: [
+                    Icon(Icons.play_arrow),
+                    Text('Play Trailer'),
+                  ],
+                ),
+              )
+            : const SizedBox.shrink(),
       ],
     );
   }
 }
 
 class _SummeryWidget extends StatelessWidget {
-  const _SummeryWidget();
+  const _SummeryWidget({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -228,6 +243,58 @@ class _PeopleWidgets extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final model = NotifierProvider.watch<MovieDetailsModel>(context);
+    var crew = model?.movieDetails?.credits.crew;
+    if (crew == null || crew.isEmpty) return const SizedBox.shrink();
+    crew = crew.length > 4 ? crew.sublist(0, 4) : crew;
+    var crewChunks = <List<Employee>>[];
+    for (var i = 0; i < crew.length; i += 2) {
+      crewChunks.add(
+        crew.sublist(i, i + 2 > crew.length ? crew.length : i + 2),
+      );
+    }
+    return Column(
+      children: crewChunks
+          .map(
+            (chunk) => Padding(
+              padding: const EdgeInsets.only(bottom: 20),
+              child: _PeopleWidgetsRow(employes: chunk),
+            ),
+          )
+          .toList(),
+    );
+  }
+}
+
+class _PeopleWidgetsRow extends StatelessWidget {
+  final List<Employee> employes;
+  const _PeopleWidgetsRow({
+    required this.employes,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return Row(
+      mainAxisSize: MainAxisSize.max,
+      children: employes
+          .map(
+            (employee) => _PeopleWidgetsRowItem(
+              employee: employee,
+            ),
+          )
+          .toList(),
+    );
+  }
+}
+
+class _PeopleWidgetsRowItem extends StatelessWidget {
+  final Employee employee;
+  const _PeopleWidgetsRowItem({
+    required this.employee,
+  });
+
+  @override
+  Widget build(BuildContext context) {
     const nameStyle = TextStyle(
       color: Colors.white,
       fontSize: 16,
@@ -238,50 +305,14 @@ class _PeopleWidgets extends StatelessWidget {
       fontSize: 16,
       fontWeight: FontWeight.w400,
     );
-    return const Column(
-      children: [
-        Row(
-          mainAxisSize: MainAxisSize.max,
-          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-          children: [
-            Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text('Stefano Sollima', style: nameStyle),
-                Text('Director', style: jobTilteStyle),
-              ],
-            ),
-            Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text('Stefano Sollima', style: nameStyle),
-                Text('Director', style: jobTilteStyle),
-              ],
-            )
-          ],
-        ),
-        SizedBox(height: 20),
-        Row(
-          mainAxisSize: MainAxisSize.max,
-          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-          children: [
-            Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text('Stefano Sollima', style: nameStyle),
-                Text('Director', style: jobTilteStyle),
-              ],
-            ),
-            Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text('Stefano Sollima', style: nameStyle),
-                Text('Director', style: jobTilteStyle),
-              ],
-            )
-          ],
-        ),
-      ],
+    return Expanded(
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Text(employee.name, style: nameStyle),
+          Text(employee.job, style: jobTilteStyle),
+        ],
+      ),
     );
   }
 }
