@@ -15,7 +15,7 @@ import 'package:themoviedb_app/domain/entity/popular_movie_response.dart';
 6) сервер ответил ожидаемой ошибкой 
 */
 
-enum ApiClientExceptionType { network, auth, other }
+enum ApiClientExceptionType { network, auth, other, sessionExpired }
 
 class ApiClientException implements Exception {
   final ApiClientExceptionType type;
@@ -41,6 +41,7 @@ class ApiClient {
   static const _host = 'https://api.themoviedb.org/3';
   static const _imageUrl = 'https://image.tmdb.org/t/p/w500';
   static const _apiKey = '67ebcd297e43e6ea6d0c47bcca1abe1e';
+
   static String imageUrl(String path) => _imageUrl + path;
 
   Future<String> auth({
@@ -317,6 +318,8 @@ class ApiClient {
       final code = status is int ? status : 0;
       if (code == 30) {
         throw ApiClientException(ApiClientExceptionType.auth);
+      } else if (code == 3) {
+        throw ApiClientException(ApiClientExceptionType.sessionExpired);
       } else {
         throw ApiClientException(ApiClientExceptionType.other);
       }
