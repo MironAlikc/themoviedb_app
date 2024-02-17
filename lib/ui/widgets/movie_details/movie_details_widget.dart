@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:themoviedb_app/domain/library/Inherited/provider.dart';
+import 'package:themoviedb_app/ui/widgets/app/my_app_model.dart';
 import 'package:themoviedb_app/ui/widgets/movie_details/movie_details_main_screen_cast_widget.dart';
 import 'package:themoviedb_app/ui/widgets/movie_details/movie_details_main_info_widget.dart';
 import 'package:themoviedb_app/ui/widgets/movie_details/movie_details_model.dart';
@@ -8,16 +9,21 @@ class MovieDetailsWidget extends StatefulWidget {
   const MovieDetailsWidget({super.key});
 
   @override
-  // ignore: library_private_types_in_public_api
   _MovieDetailsWidgetState createState() => _MovieDetailsWidgetState();
 }
 
 class _MovieDetailsWidgetState extends State<MovieDetailsWidget> {
-  
+  @override
+  void initState() {
+    super.initState();
+    final model = NotifierProvider.read<MovieDetailsModel>(context);
+    final appModel = Provider.read<MyAppModel>(context);
+    model?.onSessionExpired = () => appModel?.resetSession(context);
+  }
+
   @override
   void didChangeDependencies() {
     super.didChangeDependencies();
-
     NotifierProvider.read<MovieDetailsModel>(context)?.setupLocale(context);
   }
 
@@ -41,12 +47,7 @@ class _TitleWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final model = NotifierProvider.watch<MovieDetailsModel>(context);
-    return Text(
-      model?.movieDetails?.title ?? 'Загрузка...',
-      style: const TextStyle( 
-        color: Colors.white,
-      ),
-    );
+    return Text(model?.movieDetails?.title ?? 'Загрузка...');
   }
 }
 
