@@ -71,7 +71,7 @@ class _HeaderWidget extends StatelessWidget {
 }
 
 class _FormWidget extends StatelessWidget {
-  const _FormWidget({Key? key}) : super(key: key);
+  const _FormWidget();
 
   @override
   Widget build(BuildContext context) {
@@ -130,7 +130,7 @@ class _FormWidget extends StatelessWidget {
 }
 
 class _AuthButtonWidget extends StatelessWidget {
-  const _AuthButtonWidget({Key? key}) : super(key: key);
+  const _AuthButtonWidget();
 
   @override
   Widget build(BuildContext context) {
@@ -166,7 +166,7 @@ class _AuthButtonWidget extends StatelessWidget {
 }
 
 class _ErrorMessageWidget extends StatelessWidget {
-  const _ErrorMessageWidget({Key? key}) : super(key: key);
+  const _ErrorMessageWidget();
 
   @override
   Widget build(BuildContext context) {
