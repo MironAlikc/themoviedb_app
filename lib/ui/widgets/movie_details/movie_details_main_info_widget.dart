@@ -33,7 +33,7 @@ class MovieDetailsMainInfoWidget extends StatelessWidget {
         const Padding(
           padding: EdgeInsets.symmetric(horizontal: 10),
           child: _PeopleWidgets(),
-        ),
+        ),   
       ],
     );
   }
@@ -68,7 +68,7 @@ class _DescriptionWidget extends StatelessWidget {
 }
 
 class _TopPosterWidget extends StatelessWidget {
-  const _TopPosterWidget({Key? key}) : super(key: key);
+  const _TopPosterWidget();
 
   @override
   Widget build(BuildContext context) {
